@@ -19,6 +19,7 @@ function displayResults(responseJson, maxResults) {
     // if there are previous results, remove them
     console.log(responseJson);
     $('#results-list').empty();
+    $('#js-error-message').empty();
     // iterate through the data array, stopping at the max number of results
     for (let i = 0; i < responseJson.data.length & i<maxResults ; i++){
       // for each video object in the data
@@ -28,7 +29,7 @@ function displayResults(responseJson, maxResults) {
       $('#results-list').append(
         `<li><h3><a href="${responseJson.data[i].url}">${responseJson.data[i].fullName}</a></h3>
         <p>${responseJson.data[i].description}</p>
-        <p>${responseJson.data[i].url}</p>
+        <p><a href="${responseJson.data[i].url}">Vist this park's website</a></p>
         <p><a href="${responseJson.data[i].directionsUrl}">Click here for directions</a></p>
         </li>`
       )};
@@ -38,7 +39,7 @@ function displayResults(responseJson, maxResults) {
 
 /* This function will parse together the user submitted data and the searchURL 
 the data can correctly and successfully pulled from the API */
-function findStateParks(query, maxResults) {
+function findStateParks(query, maxResults=10) {
     const params = {
         q: query,
         limit: maxResults,
@@ -56,14 +57,14 @@ function findStateParks(query, maxResults) {
   
     fetch(url)
       .then(response => {
-        if (response.ok) {
+        if (maxResults <= 10) {
           return response.json();
         }
         throw new Error(response.statusText);
       })
       .then(responseJson => displayResults(responseJson, maxResults))
       .catch(err => {
-        $('#js-error-message').text(`Something went wrong: ${err.message}`);
+        $('#js-error-message').text(`Something went wrong, please enter a value between 1 and 10`);
       });
   }
 

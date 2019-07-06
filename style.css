@@ -40,3 +40,6 @@
   .hidden {
     display: none;
   }
+  #js-search-term, #js-search-results {
+    border: 1px solid black;
+  }
