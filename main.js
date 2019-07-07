@@ -41,7 +41,7 @@ function displayResults(responseJson, maxResults) {
 the data can correctly and successfully pulled from the API */
 function findStateParks(query, maxResults=10) {
     const params = {
-        q: query,
+        stateCode: query,
         limit: maxResults,
         api_key: apiKey,
     };
